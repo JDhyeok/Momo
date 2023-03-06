@@ -1,9 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
+import { Provider } from "react-redux";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { RootNavigator } from './src/navigation/RootNavigator';
+import { NavigationContainer } from "@react-navigation/native";
+import { RootNavigator } from "./src/navigation/RootNavigator";
 
-import LoadingScreen from './src/screens/LoadingScreen';
+import LoadingScreen from "./src/screens/LoadingScreen";
+
+import store from "./src/redux/store";
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -14,11 +17,13 @@ const App = () => {
     }, 3000);
   }, []);
 
-  return loading ? (<LoadingScreen/>) : (
-    <NavigationContainer>
-      <RootNavigator/>
-    </NavigationContainer>
-  );
+  return <Provider store={store}>
+    {loading ? (<LoadingScreen />) : (
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    )}
+  </Provider>;
 };
 
 export default App;
